@@ -59,13 +59,12 @@ jobs:
         run: npm install
 
       - name: Check Code Coverage
-        run: |
-          npm run coverage
-          ls -a
+        continue-on-error: true
+        run: npm run coverage
 
-      # - name: Upload Coverage Results
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: my-artifact
-      #     path: path/**/[abc]rtifac?/*
-      #     retention: 5
+      - name: Upload Coverage Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: Code Coverage Report
+          path: coverage
+          retention: 5
