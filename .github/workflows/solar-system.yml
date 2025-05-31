@@ -35,7 +35,7 @@ jobs:
 
       - name: Run Unit Tests for NodeJS version ${{ matrix.nodejs_version }} on ${{ matrix.operating_systems }}
         run: |
-          npm test
+          npm run test
           ls -a
 
       - name: Upload artifact
@@ -68,3 +68,5 @@ jobs:
           name: Code Coverage Report
           path: coverage
           retention: 5
+
+          
