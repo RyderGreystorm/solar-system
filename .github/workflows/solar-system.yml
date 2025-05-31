@@ -56,14 +56,12 @@ jobs:
           node-version: 20
 
       - name: Install Dependencies
-        id: coverage
         run: npm install
 
       - name: Check Code Coverage
         run: npm run coverage
 
       - name: Upload Coverage Results
-        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Code Coverage Report
