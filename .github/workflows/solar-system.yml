@@ -56,6 +56,7 @@ jobs:
           node-version: 20
 
       - name: Install Dependencies
+        id: coverage
         run: npm install
 
       - name: Check Code Coverage
