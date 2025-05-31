@@ -60,7 +60,7 @@ jobs:
 
       - name: Check Code Coverage
         run: |
-          npm coverage
+          npm run coverage
           ls -a
 
       # - name: Upload Coverage Results
