@@ -41,5 +41,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: mocha-results
+          name: mocha-test-results-${{ matrix.nodejs_version }}-${{ matrix.operating_systems }}
           path: test-results.xml
