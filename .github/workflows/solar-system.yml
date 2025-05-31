@@ -11,7 +11,16 @@ env:
   MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
 jobs:
   unit-testing:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        nodejs_version: [18, 19, 20]
+        operating_systems: [ubuntu-latest, macos-latest]
+        exclude:
+          - nodejs_version: 18
+            operating_systems: macos-latest
+          - nodejs_version: 19
+            operating_systems: macos-latest
+    runs-on: ${{ matrix.operating_systems }}
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v4
@@ -19,12 +28,18 @@ jobs:
       - name: Install nodejs
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: ${{ matrix.nodejs_version }}
 
       - name: Install Dependencies
         run: npm install
 
-      - name: Run Unit Tests
+      - name: Run Unit Tests for NodeJS version ${{ matrix.nodejs_version }} on ${{ matrix.operating_systems }}
         run: |
           npm test
           ls -a
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mocha-results
+          path: test-results.xml
