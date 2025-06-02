@@ -84,7 +84,7 @@ jobs:
           retention: 5
         
   docker:
-    name: Docker Operations
+    name: Containerization
     needs: [code-coverage, unit-testing]
     runs-on: ubuntu-latest
     steps:
@@ -96,9 +96,25 @@ jobs:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Check docker login
-        if: steps.check_login.outcome == 'success'
-        run: echo "LOGGED IN SUCCESSFULLY....."
+      - name: Building for Testing
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          tag: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
+
+      - name: Running Test
+        run: |
+          docker images
+          docker run --name solar-system-app -d \
+          -p 3000:3000 \
+          -e MONGO_URI=$MONGO_URI \
+          -e MONGO_USERNAME=$MONGO_USERNAME \
+          -e MONGO_PASSWORD=$MONGO_PASSWORD \
+          ${{ vars.DOCKERHUB_USERNAME }}/solar-system-app:${{ github.sha }}
+
+          echo "Testing Image URL using wget"
+          wget -q -O - 127.0.0.1:3000 | grep -i live
 
 
 
