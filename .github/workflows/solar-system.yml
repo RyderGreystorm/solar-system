@@ -85,6 +85,7 @@ jobs:
         
   docker:
     name: Docker Operations
+    needs: [code-coverage, unit-testing]
     runs-on: ubuntu-latest
     steps:
 
