@@ -98,7 +98,7 @@ jobs:
 
       - name: Check docker login
         if: steps.check_login.outcome == 'success'
-        run: echo "LOGGED IN SUCCESSFULLY...."
+        run: echo "LOGGED IN SUCCESSFULLY....."
 
 
 
