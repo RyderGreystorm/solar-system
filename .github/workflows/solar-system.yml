@@ -110,6 +110,7 @@ jobs:
         with:
           context: .
           push: false
+          load: true
           tags: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
 
       - name: Running Test
@@ -123,7 +124,7 @@ jobs:
           ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
 
           echo "Testing Image URL using wget"
-          wget -q -O - 127.0.0.1:3000 | grep -i live
+          wget -q -O - 127.0.0.1:3000/live | grep -i live
 
 
 
