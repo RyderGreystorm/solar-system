@@ -98,7 +98,7 @@ jobs:
 
       - name: Checkout Code
         uses: actions/checkout@v4
-        
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -120,7 +120,7 @@ jobs:
           -e MONGO_URI=$MONGO_URI \
           -e MONGO_USERNAME=$MONGO_USERNAME \
           -e MONGO_PASSWORD=$MONGO_PASSWORD \
-          ${{ vars.DOCKERHUB_USERNAME }}/solar-system-app:${{ github.sha }}
+          ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
 
           echo "Testing Image URL using wget"
           wget -q -O - 127.0.0.1:3000 | grep -i live
