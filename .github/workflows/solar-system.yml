@@ -133,7 +133,7 @@ jobs:
           push: true
           load: false
           tags: |
-            ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.run_id }}
+            ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.run_number }}
             ${{ vars.DOCKERHUB_USERNAME }}/solar-system:latest
 
 
