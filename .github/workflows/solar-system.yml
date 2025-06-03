@@ -144,8 +144,8 @@ jobs:
           tags: |
             ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.run_number }}
             ${{ vars.DOCKERHUB_USERNAME }}/solar-system:latest
-            ghcr/${{ github.repository_owner }}/solar-system:${{  github.run_number }}
-            ghcr/${{ github.repository_owner }}/solar-system:$latest
+            ghcr/${{ github.repository_owner | toLower }}/solar-system:${{  github.run_number }}
+            ghcr/${{ github.repository_owner | toLower }}/solar-system:$latest
 
 
 
