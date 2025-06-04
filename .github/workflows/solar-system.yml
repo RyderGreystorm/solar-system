@@ -6,9 +6,6 @@ on:
       - main
       - feature/*
 env:
-  MONGO_URI: 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
-  MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
-  MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
   REPO_OWNER: rydergreystorm
 jobs:
   unit-testing:
@@ -50,7 +47,7 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json')}}
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install 
 
       - name: Run Unit Tests for NodeJS version ${{ matrix.nodejs_version }} on ${{ matrix.operating_systems }}
         run: |
@@ -65,6 +62,19 @@ jobs:
 
   code-coverage:
     runs-on: ubuntu-latest
+    container:
+      image: node:20
+    services:
+      mongodb:
+        image: siddharth67/mongo-db:non-prod
+        options:
+          --name mongo
+    env:
+      MONGO_URI: 'mongodb://mongo:27017/superData'
+      MONGO_USERNAME: ${{ vars.MONGO_TEST_USERNAME }}
+      MONGO_PASSWORD: ${{ secrets.MONGO_TEST_PASSWORD }}
+        
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
