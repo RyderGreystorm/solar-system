@@ -184,6 +184,9 @@ jobs:
       #     kubeconfig: $#{{ secrets.KUBECONFIG }}
       #     context: <context name> # current-context from kubeconfig is used as default
 
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
       - name: Update Image to Latest in Dev Environment
         uses: cschleiden/replace-tokens@v1
         with:
