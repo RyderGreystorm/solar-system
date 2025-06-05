@@ -192,3 +192,6 @@ jobs:
           files: '["kubernetes/development/*"]'
         env:
           IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.run_number }}
+
+      - name: See Changes
+        run: cat kubernetes/development/*.yaml
