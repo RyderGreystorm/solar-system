@@ -190,4 +190,4 @@ jobs:
           echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
 
       - name: Verify Installation
-        run: kubectl version -o yaml
+        run: kubectl version -o yaml --kubeconfig $HOME/.kube/config
