@@ -184,10 +184,7 @@ jobs:
           version: 'v1.31.0' 
 
       - name: Set Kubecontext
-        uses: azure/k8s-set-context@v4
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.KUBECONFIG }}
+        run: echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
 
       - name: Verify Installation
         run: kubectl version -o yaml
