@@ -190,4 +190,4 @@ jobs:
           echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
 
       - name: Verify Installation
-        run: kubectl config get-context  --kubeconfig $HOME/.kube/config
+        run: kubectl config get-contexts  --kubeconfig $HOME/.kube/config
