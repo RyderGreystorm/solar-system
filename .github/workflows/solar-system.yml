@@ -201,6 +201,6 @@ jobs:
         run: |
           ls -ltr
           mkdir reports-${{ github.sha }}
-          mv */* reports-${{ github.sha }}
+          mv mocha-test-results-* "Code Coverage Report" reports-${{ github.sha }}/
           ls reports-${{ github.sha }}
         
