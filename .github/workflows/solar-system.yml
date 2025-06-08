@@ -178,10 +178,6 @@ jobs:
       environment: development
       k8s-manifest-dir: kubernetes/development/
 
-
-
-
-
   prod-deploy:
     if: github.ref == 'refs/head/main'
     needs: docker
@@ -192,3 +188,20 @@ jobs:
       repo_owner: rydergreystorm #Could also be stored as a repo or org varaible and passed as $#{{ vars.REPO_OWNER }}
       environment: production
       k8s-manifest-dir: kubernetes/production/
+
+  publish-reports:
+    runs-on: ubuntu-latest
+    needs: [unit-testing, code-coverage]
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: Code Coverage Report, mocha-test-results-${{ matrix.nodejs_version }}-${{ matrix.operating_systems }}
+
+      - name: Group artifacts
+        run: |
+          ls -ltr
+          mkdir reports-${{ github.sha }}
+          mv * reports-${{ github.sha }}
+          ls reports-${{ github.sha }}
+        
