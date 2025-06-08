@@ -236,3 +236,5 @@ jobs:
           SLACK_TITLE: Post Title
           SLACK_USERNAME: rtCamp
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE_ON_SUCCESS: "The bests were successful"
+          SLACK_MESSAGE_ON_FAILURE: "Some Tests/Coverage failed"
