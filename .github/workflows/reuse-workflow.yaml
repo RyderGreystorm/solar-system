@@ -1,0 +1,70 @@
+name: Deployment-Reusable Workflow
+on:
+    workflow_call:
+        secrets:
+            kube_secret:
+                required: true
+            # db_secret:
+            #     required: true
+        inputs:
+            repo_owner:
+                required: true
+                type: string
+            environment:
+                description: Provide the deployment environment
+                required: true
+                type: string
+            k8s-manifest-dir:
+                description: Provide the directory containing environment specific files
+                default: kubernetes/
+                required: true
+                type: string
+            kubectl-version:
+                description: Provide the requried kubectl version
+                default: v1.31.0
+                required: false
+                type: string
+            
+
+jobs:
+    reuse-deploy:
+      runs-on: ubuntu-latest
+      environment:
+        name: ${{ inputs.environment }}
+      steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Install Kubectl
+        uses: azure/setup-kubectl@v4
+        with:
+          version: '${{ inputs.kubectl-version }}' 
+
+      - name: Set Kubecontext
+        run: |
+          mkdir -p $HOME/.kube
+          touch $HOME/.kube config
+          echo "${{ secrets.kube_secret }}" > $HOME/.kube/config
+
+      - name: Verify Installation
+        run: kubectl config get-contexts  --kubeconfig $HOME/.kube/config
+
+      - name: Fetch Nginx Ingress Controller IP Address
+        run: echo "INGRESS_IP=$(kubectl -n ingress-nginx get services ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')" >> GITHUB_ENV
+      
+      - name: Replace Tokens
+        uses: cschleiden/replace-tokens@v1
+        with:
+          tokenPrefix: '_{_'
+          tokenSuffix: '_}_'
+          files: '["${{ inputs.k8s-manifest-dir }}*.yaml"]'
+        env:
+          REPLICA: ${{ vars.REPLICAS }}
+          IMAGE: ghcr.io/${{ inputs.repo_owner  }}/solar-system:latest
+          NAMESPACE: ${{ vars.NAMESPACE }}
+          INGRESS_IP: ${{ env.INGRESS_IP }}
+
+      - name: Check Changes
+        run: |
+          cat ${{ inputs.k8s-manifest-dir }}*.yaml
+          kubectl apply -f ${{ inputs.k8s-manifest-dir }}
