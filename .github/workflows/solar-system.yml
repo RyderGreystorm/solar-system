@@ -196,17 +196,11 @@ jobs:
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v4
-        with:
-          name: Code Coverage Report
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: mocha-test-results-${{ matrix.nodejs_version }}-${{ matrix.operating_systems }}
 
       - name: Group artifacts
         run: |
           ls -ltr
           mkdir reports-${{ github.sha }}
-          mv * reports-${{ github.sha }}
+          mv */* reports-${{ github.sha }}
           ls reports-${{ github.sha }}
         
