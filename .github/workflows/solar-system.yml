@@ -5,7 +5,8 @@ on:
     branches:
       - main
       - feature/*
-
+env:
+  REPO_OWNER: 'rydergreystorm'
 jobs:
   unit-testing:
     services:
