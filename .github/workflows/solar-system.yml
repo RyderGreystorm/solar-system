@@ -168,7 +168,7 @@ jobs:
             ghcr.io/${{ env.REPO_OWNER  }}/solar-system:latest
 
   dev-deploy:
-    if: contains(github.ref, 'feature/')
+    if: contains(github.ref, 'features/')
     needs: docker
     uses: ./.github/workflows/reuse-workflow.yaml
     secrets:
@@ -197,7 +197,11 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          name: Code Coverage Report, mocha-test-results-${{ matrix.nodejs_version }}-${{ matrix.operating_systems }}
+          name: Code Coverage Report
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: mocha-test-results-${{ matrix.nodejs_version }}-${{ matrix.operating_systems }}
 
       - name: Group artifacts
         run: |
