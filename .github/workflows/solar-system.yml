@@ -233,8 +233,8 @@ jobs:
           SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
           SLACK_MESSAGE: 'Post Content :rocket:'
-          SLACK_TITLE: Post Title
-          SLACK_USERNAME: rtCamp
+          SLACK_TITLE: Test Job Reports
+          SLACK_USERNAME: RyderGreystorm
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_MESSAGE_ON_SUCCESS: "The bests were successful"
           SLACK_MESSAGE_ON_FAILURE: "Some Tests/Coverage failed"
