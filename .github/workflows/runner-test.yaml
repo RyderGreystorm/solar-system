@@ -1,0 +1,11 @@
+name: Testing runner
+on:
+    workflow_dispatch
+jobs:
+    testing-me-runners:
+        runs-on: [self-hosted,Linux,X64,prod,gpu,ai]
+        steps:
+            - name: Test with echo
+              run: |
+                echo "Testing the gpu enabled runner"
+                sleep 10s
