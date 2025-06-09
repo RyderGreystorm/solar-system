@@ -3,6 +3,11 @@
 A simple HTML+MongoDB+NodeJS project to display Solar System and it's planets.
 
 ---
+
+
+[![Testing runner](https://github.com/RyderGreystorm/solar-system/actions/workflows/runner-test.yaml/badge.svg?branch=feature%2Fexploring-workflows)](https://github.com/RyderGreystorm/solar-system/actions/workflows/runner-test.yaml)
+
+
 ## Requirements
 
 For development, you will only need Node.js and NPM installed in your environement.
