@@ -1,6 +1,9 @@
 name: Testing runner
 on:
     workflow_dispatch:
+    push:
+        branches:
+            - feature/*
 jobs:
     testing-me-runners:
         runs-on: [self-hosted,Linux,X64,prod,gpu,ai]
